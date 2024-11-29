@@ -1,25 +1,10 @@
 import { Request, Response } from 'express';
+
 import {
+  deleteSingleStudentFromDatabase,
   getAllStudentsFromDatabase,
   getSingleStudentFromDatabase,
-  studentDataSavedToDatabase,
 } from './student.services';
-
-// Create Student Controller
-export const createStudent = async (req: Request, res: Response) => {
-  try {
-    const { student } = req.body;
-    // Send Data
-    const result = await studentDataSavedToDatabase(student);
-    res.status(200).json({
-      success: true,
-      message: 'Student Created Successful',
-      data: result,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 // Get All Students
 export const getAllStudents = async (req: Request, res: Response) => {
@@ -50,3 +35,20 @@ export const getSingleStudent = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+// Delete Single Student
+export const deleteSingleStudent = async (req: Request, res: Response) => {
+  try {
+    const { studentId } = req.params;
+    const result = await deleteSingleStudentFromDatabase(studentId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Single Student Delete Successful',
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
